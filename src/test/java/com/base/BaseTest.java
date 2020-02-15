@@ -35,15 +35,15 @@ public abstract class BaseTest  {
     }
     
     public void log(String message){
-        getLogger().info(message);
+        logger.info(message);
     }
     
     public void logInfo(String message){
-        getLogger().info(message);
+        logger.info(message);
     }
     
     public void logError(String message) {
-        getLogger().error(message);
+        logger.error(message);
     }
     
     public void checkLogMessagesAndAddAttachment() {

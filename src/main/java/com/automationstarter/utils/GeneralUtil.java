@@ -1,10 +1,15 @@
 package com.automationstarter.utils;
 
 import com.google.common.collect.Ordering;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
@@ -20,20 +25,6 @@ public class GeneralUtil {
     
     private static final String datePattern = "yyyy-MM-dd";
     private static final DateFormat dateFormat = new SimpleDateFormat(datePattern);
-    
-    /**
-     * check if the url belongs to rccl or not. If the url is rccl then returns true, false otherwise
-     */
-    public static boolean isRoyalCaribbeanUrl() {
-        return getCurrentUrl().matches("(.*)rccl(.*)");
-    }
-    
-    /**
-     * check if the url contains 'category'
-     */
-    public static boolean isCategoryPresentInUrl() {
-        return getCurrentUrl().matches("(.*)category(.*)");
-    }
     
     /**
      * check if the url si Admin page
@@ -73,6 +64,32 @@ public class GeneralUtil {
         calender.setTime(new SimpleDateFormat(datePattern).parse(currentDate));
         calender.add(DATE, days);
         return dateFormat.format(calender.getTime());
+    }
+    
+    /**
+     * Returns the current year as a type: integer
+     */
+    public static int getCurrentYear() {
+        int year = LocalDate.now().getYear();
+        return year;
+    }
+    
+    /**
+     * 1. Parses the String dateReleased variable and extracts year, month and dayOfMont
+     * 2. And converts to LocalDate object
+     */
+    public static LocalDate convertStringToLocalDateFormat(String dateReleased) {
+        return LocalDate.of(Integer.parseInt(dateReleased.substring(4, 8)),
+                Integer.parseInt(dateReleased.substring(0, 2)),
+                Integer.parseInt(dateReleased.substring(4, 6)));
+    }
+    
+    /**
+     * Read Json file from the project structure.
+     */
+    public static JsonElement parseJsonFileFromProjectStructure() throws FileNotFoundException {
+        return new JsonParser().parse(new FileReader(
+                "/Users/yourUserName/Documents/dev/yourProjectName/search_shorex.json"));
     }
     
     
