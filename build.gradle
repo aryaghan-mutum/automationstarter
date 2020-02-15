@@ -1,7 +1,20 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}")
+	}
+}
+
+
 plugins {
 	id 'org.springframework.boot' version '2.3.0.BUILD-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'io.franzbecker.gradle-lombok' version '3.1.0'
+	id 'io.qameta.allure' version '2.8.1'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com'
@@ -21,13 +34,40 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation("org.junit.jupiter:junit-jupiter:${junit_jupiter_version}")
+	implementation("org.junit.jupiter:junit-jupiter-params:${junit_jupiter_params_version}")
+	implementation("org.junit.jupiter:junit-jupiter-api:${junit_jupiter_api_version}")
+	implementation("org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_engine_version}")
+	implementation("io.qameta.allure:allure-junit5:${allure_junit_version}")
+	testImplementation("io.qameta.allure:allure-selenide:${allure_selenide_version}")
+	
+	compile "ch.qos.logback:logback-classic:${logback_version}"
+	compile "com.codeborne:selenide:${selenide_version}"
+	compile "com.google.code.gson:gson:${gson_version}" // Json parsing api
+	compile group: 'org.springframework', name: 'spring-core', version: "${spring_version}"
+	compile "org.springframework:spring-core:${spring_version}"
+	compile "org.springframework:spring-context:${spring_version}"
+	compile "org.springframework.boot:spring-boot-starter-webflux:${spring_boot_version}"
+	implementation "com.github.javafaker:javafaker:${faker_version}"
+	compile "mysql:mysql-connector-java:${my_sql_version}"
+	implementation "org.assertj:assertj-core:${assertj_version}"
+	
+	implementation "io.rest-assured:rest-assured:${rest_assured_version}"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot_version}"
 }
+
+configurations.all {
+	exclude group: 'junit', module: 'junit'
+	exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	exclude group: 'io.rest-assured', module: 'rest-assured'
+	exclude group: 'javax.xml.bind', module: 'javap-api'
+	exclude group: 'javax.xml', module: 'jaxp-api'
+	exclude group: 'junit', module: 'junit'
+	exclude group: 'ch.qos.logback'
+	exclude group: 'org.apache.logging.log4j'
+	exclude group: 'log4j'
+}
+
 
 test {
 	useJUnitPlatform()
