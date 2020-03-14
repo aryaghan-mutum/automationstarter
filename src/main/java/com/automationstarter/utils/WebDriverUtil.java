@@ -21,6 +21,10 @@ import static org.openqa.selenium.By.xpath;
 
 public class WebDriverUtil {
     
+    public final WebDriverUtil openWebUrl(String url) {
+        getWebDriver().get(url);
+        return this;
+    }
     /**
      * Refresh modify order pop up
      */
@@ -33,9 +37,10 @@ public class WebDriverUtil {
     /**
      * Clicks a web element link using WebDriver Runner
      */
-    public final static void clickWebElementLink(final String elementLink) {
+    public final WebDriverUtil clickWebElementLink(final String elementLink) {
         WebElement webElement = WebDriverRunner.getWebDriver().findElement(xpath(elementLink));
         executeJavaScript("arguments[0].click();", webElement);
+        return this;
     }
     
     /**
@@ -50,14 +55,14 @@ public class WebDriverUtil {
      *
      * @return
      */
-    public final static String getCurrentUrl() {
+    public final String getCurrentUrl() {
         return WebDriverRunner.url();
     }
     
     /**
      * Get title of the current page
      */
-    public final static String getTitle() {
+    public final String getTitle() {
         return title();
     }
     

@@ -41,6 +41,7 @@ dependencies {
 	implementation("io.qameta.allure:allure-junit5:${allure_junit_version}")
 	testImplementation("io.qameta.allure:allure-selenide:${allure_selenide_version}")
 	
+	compile group: 'com.codeborne', name: 'selenide', version: '4.2.1'
 	compile "ch.qos.logback:logback-classic:${logback_version}"
 	compile "com.codeborne:selenide:${selenide_version}"
 	compile "com.google.code.gson:gson:${gson_version}" // Json parsing api

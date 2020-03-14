@@ -17,27 +17,25 @@ public abstract class BaseTest  {
     
     @Getter
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    
     protected static List<String> logMessages = new ArrayList<>();
     
     
     @BeforeEach
     public void setUp() throws Exception {
-        log("Setting up test");
-
-        log("Setting up test finished");
+        logInfo("Setting up test");
+    
+        logInfo("Setting up test finished");
     }
     
     @AfterEach
     public void tearDown() throws Exception {
-        log("Tearing down test");
-        log("Tearing down test finished");
+        logInfo("Tearing down test");
+        logInfo("Tearing down test finished");
     }
     
     public void log(String message){
         logger.info(message);
     }
-    
     public void logInfo(String message){
         logger.info(message);
     }
@@ -60,9 +58,9 @@ public abstract class BaseTest  {
     }
     
     protected SoftAssertions getSoftAssertions() {
-       // StringBuilder errorsCollected = new StringBuilder();
+        StringBuilder errorsCollected = new StringBuilder();
         SoftAssertions softAssertions = new SoftAssertions();
-     //   softAssertions.errorsCollected().forEach(error -> errorsCollected.append(parseErrorForAllure(error)));
+        softAssertions.errorsCollected().forEach(error -> errorsCollected.append(parseErrorForAllure(error)));
         return softAssertions;
     }
 }

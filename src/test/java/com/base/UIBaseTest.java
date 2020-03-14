@@ -1,37 +1,50 @@
 package com.base;
 
+import com.automationstarter.utils.WebDriverUtil;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.Selenide.open;
 import static java.lang.String.format;
 
 public abstract class UIBaseTest extends BaseTest {
     
-    //public LoginPage loginPage;
-    private WebDriver driver;
+    public WebDriver driver;
+    private WebDriverUtil webDriverUtil;
+    private String browser = "firefox";
     
     @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         
-        System.setProperty("webdriver.chrome.driver", "chromedriverpath/chromedriver.exe");
-        
+        driver = getWebDriver();
         try {
-            driver = new ChromeDriver();
-            String appUrl = "http://www.facebook.com/";
+            open("https://www.google.com");
             Configuration.timeout = 10000;
-            getWebDriver().manage().window().maximize();
+            driver.manage().window().maximize();
         } catch (Exception ex) {
-            log(format("Exception while instantiating driver. ", ex));
+            logInfo(format("Exception while instantiating driver. ", ex));
         }
-        
-        sleep(2000);
     }
+    
+    private WebDriver getWebDriver() {
+        if (browser.equalsIgnoreCase("chrome")) {
+            System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+            driver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            System.setProperty("webdriver.gecko.driver", "drivers/geckodriver");
+            driver = new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            System.setProperty("webdriver.edge.driver", "drivers/msedgedriver");
+            driver = new FirefoxDriver();
+        }
+        return driver;
+    }
+    
     
     @AfterEach
     public void tearDown() throws Exception {
@@ -42,5 +55,6 @@ public abstract class UIBaseTest extends BaseTest {
         checkLogMessagesAndAddAttachment();
         driver.close();
     }
+    
     
 }

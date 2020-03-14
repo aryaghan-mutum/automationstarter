@@ -18,19 +18,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.automationstarter.utils.WebDriverUtil.getCurrentUrl;
 import static java.util.Calendar.DATE;
 
 public class GeneralUtil {
     
     private static final String datePattern = "yyyy-MM-dd";
     private static final DateFormat dateFormat = new SimpleDateFormat(datePattern);
-    
+    private WebDriverUtil webDriverUtil;
     /**
      * check if the url si Admin page
      */
-    public static boolean isAdminPage() {
-        return getCurrentUrl().matches("(.*)wp-admin(.*)");
+    public boolean isAdminPage() {
+        return webDriverUtil.getCurrentUrl().matches("(.*)wp-admin(.*)");
     }
     
     /**

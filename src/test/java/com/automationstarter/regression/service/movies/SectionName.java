@@ -75,7 +75,7 @@ public class SectionName extends BaseTest {
                     
                     long actorsCount = jsonStream(menuID, "cast")
                             .filter(this::areAllActorsNull)
-                            .peek(menuSection -> log(String.format("All actors are null for title: %s", jsonString(menuID, TITLE))))
+                            .peek(menuSection -> logInfo(String.format("All actors are null for title: %s", jsonString(menuID, TITLE))))
                             .count();
                     
                     if (actorsCount > 0) {
